@@ -13,24 +13,22 @@ unit DXCommon;
 
 
 interface
-uses Windows;
+uses Windows, SysUtils;
 
 function IsNTandDelphiRunning : boolean;
 
 implementation
-function IsNTandDelphiRunning : boolean;
+function IsNTandDelphiRunning: Boolean;
 var
-  OSVersion  : TOSVersionInfo;
-  ProgName   : array[0..255] of char;
+  OSVersion: TOSVersionInfo;
+  ProgName: string;
 begin
-  OSVersion.dwOsVersionInfoSize := sizeof(OSVersion);
+  OSVersion.dwOSVersionInfoSize := SizeOf(OSVersion);
   GetVersionEx(OSVersion);
-  ProgName[0] := #0;
-  lstrcat(ProgName, PChar(ParamStr(0)));
-  CharLowerBuff(ProgName, SizeOf(ProgName));
+  ProgName := LowerCase(ParamStr(0));
   // Not running in NT or program is not Delphi itself ?
-  result := ( (OSVersion.dwPlatformID = VER_PLATFORM_WIN32_NT) and
-              (Pos('delphi32.exe', string(ProgName)) > 0) );
+  Result := (OSVersion.dwPlatformID = VER_PLATFORM_WIN32_NT) and
+            (Pos('delphi32.exe', ProgName) > 0);
 end;
 
 end.

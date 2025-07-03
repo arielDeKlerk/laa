@@ -15,7 +15,6 @@ object JForm: TJForm
   Font.Name = 'Times New Roman'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = True
   Position = poDefault
   Scaled = False
   OnActivate = FormActivate

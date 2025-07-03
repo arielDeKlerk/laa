@@ -12,7 +12,6 @@ object FEstandartes: TFEstandartes
   Font.Name = 'Times New Roman'
   Font.Style = [fsBold]
   KeyPreview = True
-  OldCreateOrder = True
   Position = poScreenCenter
   Scaled = False
   OnCreate = FormCreate
