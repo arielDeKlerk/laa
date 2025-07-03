@@ -13,7 +13,7 @@ unit DXCommon;
 
 
 interface
-uses Windows;
+uses Windows, SysUtils;
 
 function IsNTandDelphiRunning : boolean;
 
