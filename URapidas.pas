@@ -68,14 +68,14 @@ begin
 end;
 
 procedure TFRapidas.paint;
-const MSG_Configuracion_de_acciones_rapidas='CONFIGURACI覰 DE TECLAS R罰IDAS';
+const MSG_Configuracion_de_acciones_rapidas='CONFIGURACI脫N DE TECLAS R脕PIDAS';
 begin
   PintarFondoNegro(self);
   with canvas do
   begin
     TextOut((width-textwidth(MSG_Configuracion_de_acciones_rapidas))div 2,8,MSG_Configuracion_de_acciones_rapidas);
     TextOut(16,40,'Tecla:');
-    TextOut(16,72,'Acci髇:');
+    TextOut(16,72,'Acci贸n:');
   end;
 end;
 
@@ -88,9 +88,9 @@ end;
 procedure TFRapidas.BtnGuardarClick(Sender: TObject);
 begin
   if GuardarConfiguracionTeclasRapidas then
-    showmessagez('Configuraci髇 guardada...')
+
   else
-    showmessagez('No fue posible guardar la configuraci髇 de teclas');
+    showmessagez('No fue posible guardar la configuraci贸n de teclas');
   close;
 end;
 
@@ -234,9 +234,9 @@ begin
         ((InfConjuro[Nro_accion-16].BanderasCnjr and cjPuedeLanzarAsimismo)<>0) then
         result:=result+' (al objetivo)';
     end;
-    //46..53=extensi髇 futura.
+    //46..53=extensi贸n futura.
     52..81:result:='Hechizo: '+NomConjuro[Nro_accion-52]+' (a uno mismo)';
-    //72..80=extensi髇 futura.
+    //72..80=extensi贸n futura.
     //81..adelante, ordenes especiales:
     88:result:='Lanzar hechizo elegido (al objetivo)';
     89:result:='Lanzar hechizo elegido (a uno mismo)';
@@ -253,12 +253,12 @@ begin
     111:result:='Ordenar Seguir';
     112:result:='Ordenar Detenerse';
 
-    121:result:='Ver mi posici髇 actual';
+    121:result:='Ver mi posici贸n actual';
     122:result:='Resucitar';
     123:result:='Descansar';
     124:result:='Meditar';
     125:result:='Comer/Beber';
-    126:result:='Equipar munici髇';
+    126:result:='Equipar munici贸n';
     else result:='';
   end;
 end;
@@ -285,7 +285,7 @@ begin
   if (tecla>35) then exit;//seguridad
   CodAccion:=ListaAccionRapida[tecla];
   case CodAccion of
-    3:begin//protecci髇 divina
+    3:begin//protecci贸n divina
       for i:=0 to MAX_ARTEFACTOS do
         if (JugadorCl.artefacto[i].id=224) then
         begin
@@ -391,7 +391,7 @@ begin
           Jform.RealizarAccion(mbRight,uMunicion,i);
           exit;
         end;
-      Jform.MensajeAyuda:='No te queda munici髇 en tu bolso';
+      Jform.MensajeAyuda:='No te queda munici贸n en tu bolso';
     end;
   end;
 end;

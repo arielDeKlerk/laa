@@ -15,6 +15,8 @@ Este proyecto contiene el código fuente de un juego escrito en Delphi.
 4. Compilar el proyecto usando `Run → Compile` o presionando **Ctrl+F9**.
    Si aparecen errores en `UCliente.pas`, verifica que todas las unidades se
    encuentren en la misma carpeta y que los archivos estén codificados en UTF-8.
+5. Las formas se han actualizado para Delphi 12 y ya no utilizan la propiedad
+   `OldCreateOrder`, por lo que no es necesario modificar esta opción.
 
 ## Ejecución
 

@@ -9,7 +9,6 @@ object FColor8: TFColor8
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
 end

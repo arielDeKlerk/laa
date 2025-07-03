@@ -55,7 +55,7 @@ begin
   Font.Height := -15;
   Font.Name := NOMBRE_FONT;
   Font.Style := [fsBold];
-  OldCreateOrder := True;
+
   Position := poScreenCenter;
   Scaled := False;
   PixelsPerInch := 96;
