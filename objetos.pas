@@ -5,13 +5,13 @@ License: GNU General Public License (GPL)
 Category: Multi-User Dungeons (MUD)
 *********************************************************)
 
-//MÛdulo libre de bibliotecas externas
+//M√≥dulo libre de bibliotecas externas
 unit objetos;
-//  Este mÛdulo tambiÈn incluye los
+//  Este m√≥dulo tambi√©n incluye los
 //descriptores de conjuros.
-//  El resto de la parte de magia est·
-//implementado mayormente en mÛdulos del servidor y
-//sus efectos reflejos en mÛdulos del cliente.
+//  El resto de la parte de magia est√°
+//implementado mayormente en m√≥dulos del servidor y
+//sus efectos reflejos en m√≥dulos del cliente.
 
 interface
 
@@ -36,10 +36,10 @@ const
   grFlechas=6;
   grComida=18;
   grBebida=19;
-  //CaracterÌsticas de objetos
+  //Caracter√≠sticas de objetos
   PUNTOS_MANA_POCION=20;
   PUNTOS_HP_POCION=25;
-  //CÛdigos de mensajes de error
+  //C√≥digos de mensajes de error
   //----------------------------------------------------------------------------
   i_Ok=0;
   i_Error=1;
@@ -359,22 +359,22 @@ const
 //********************************************
 
 // 0 1 (?) (?)  (?)   (?  ?  ?)
-//     Id. DaÒo Mald. +-Nivel-+
+//     Id. Da√±o Mald. +-Nivel-+
 
-// Id: Determina si est· identificado si es 1 (+$20), si es 0 no est· identificado.
-// DaÒo: Determina si el modificador es de daÒo/armadura si es 1 (+$10), si es 0 es de ataque/evasiÛn.
+// Id: Determina si est√° identificado si es 1 (+$20), si es 0 no est√° identificado.
+// Da√±o: Determina si el modificador es de da√±o/armadura si es 1 (+$10), si es 0 es de ataque/evasi√≥n.
 // Mald.: Determina si el efecto es negativo si es 1 (+$08), si es 0 es positivo.
 // Nivel: Va de 0 a 7 (+$07), visualizado como +1 a +8, o +5% a +40% o -1 a -8 o -5% a -40%.
 
 // $80:
-// Objeto m·gico con tipo de daÒo modificado:
+// Objeto m√°gico con tipo de da√±o modificado:
 //********************************************
 
 // 1 0 (?) (? ?) (?  ?  ?)
 //     Id. Tipo  +-Nivel-+
 
-// Id: Determina si est· identificado si es 1 (+$40), si es 0 no est· identificado.
-// Tipo: Determina el tipo de daÒo m·gico:
+// Id: Determina si est√° identificado si es 1 (+$40), si es 0 no est√° identificado.
+// Tipo: Determina el tipo de da√±o m√°gico:
 //   00 = Veneno (+$00)
 //   01 = Fuego  (+$08)
 //   10 = Hielo  (+$10)
@@ -382,14 +382,14 @@ const
 // Nivel: Va de 0 a 7 (+$07), visualizado como +1 a +8.
 
 // $C0:
-// Objeto m·gico especial:
+// Objeto m√°gico especial:
 //*************************
 
 // 1 1 (?) (? ? ? ? ?)
 //     Id. +--Tipo---+
 
-// Id: Determina si est· identificado si es 1 (+$40), si es 0 no est· identificado.
-// Tipo: Determina el tipo de efecto m·gico, va de 0 a 31 (+$1F)
+// Id: Determina si est√° identificado si es 1 (+$40), si es 0 no est√° identificado.
+// Tipo: Determina el tipo de efecto m√°gico, va de 0 a 31 (+$1F)
 
   MskIdentificado=$20;
   MskBendicionMaldicion=$40;
@@ -410,7 +410,7 @@ const
   MskEstadoMagico=$07;
   MIN_FIBRASxTELA=4;//no cambiar de 4
   MIN_PIELESxCUERO=4;//no cambiar de 4
-  //M·scaras para extraer casilla ocupada:
+  //M√°scaras para extraer casilla ocupada:
   MascarB:array[0..7] of byte=($01,$02,$04,$08,$10,$20,$40,$80);
   //Indican el objeto que se esta usando como:
   uNoDefinido=255;
@@ -783,28 +783,28 @@ asm
 end;
 
 
-function B2aStr(nro:integer):TCadena4;
+function B2aStr(nro: integer): TCadena4;
 begin
-  result[0]:=#2;
-  result[1]:=chr(nro and $FF);
-  result[2]:=chr((nro shr 8) and $FF);
+  Result[0] := AnsiChar(#2);
+  Result[1] := AnsiChar(chr(nro and $FF));
+  Result[2] := AnsiChar(chr((nro shr 8) and $FF));
 end;
 
-function B3aStr(nro:integer):TCadena4;
+function B3aStr(nro: integer): TCadena4;
 begin
-  result[0]:=#3;
-  result[1]:=chr(nro and $FF);
-  result[2]:=chr((nro shr 8 )and $FF);
-  result[3]:=chr((nro shr 16)and $FF);
+  Result[0] := AnsiChar(#3);
+  Result[1] := AnsiChar(chr(nro and $FF));
+  Result[2] := AnsiChar(chr((nro shr 8) and $FF));
+  Result[3] := AnsiChar(chr((nro shr 16) and $FF));
 end;
 
-function B4aStr(nro:integer):TCadena4;
+function B4aStr(nro: integer): TCadena4;
 begin
-  result[0]:=#4;
-  result[1]:=chr(nro and $FF);
-  result[2]:=chr((nro shr 8 )and $FF);
-  result[3]:=chr((nro shr 16)and $FF);
-  result[4]:=chr((nro shr 24)and $FF);
+  Result[0] := AnsiChar(#4);
+  Result[1] := AnsiChar(chr(nro and $FF));
+  Result[2] := AnsiChar(chr((nro shr 8) and $FF));
+  Result[3] := AnsiChar(chr((nro shr 16) and $FF));
+  Result[4] := AnsiChar(chr((nro shr 24) and $FF));
 end;
 
 function intaStr(valor:integer):string;
@@ -923,7 +923,7 @@ begin
 end;
 
 function CalcularModificadorAtaDef(const objeto:TArtefacto):integer;
-//Calcula modificador de ataque/evasiÛn
+//Calcula modificador de ataque/evasi√≥n
 //No controla el tipo de objeto
 var tipoMagia:TTipoMagiaArtefacto;
 begin
@@ -933,7 +933,7 @@ begin
     exit;
   end;
   tipoMagia:=TTipoMagiaArtefacto(objeto.modificador shr 6);
-  //Si es objeto maldito/bendito que no modifica el daÒo/armadura
+  //Si es objeto maldito/bendito que no modifica el da√±o/armadura
   if (tipoMagia=maModificador) and ((objeto.modificador and MskDanno)=0) then
     if (objeto.modificador and MskMaldito)=0 then//es bendito
       result:=(objeto.modificador and MskEstadoMagico)+1
@@ -945,7 +945,7 @@ begin
 end;
 
 function ModificadorDefensaObjeto(const objeto:TArtefacto):integer;
-begin   //SÛlo si es un objeto de protecciÛn/maldiciÛn
+begin   //S√≥lo si es un objeto de protecci√≥n/maldici√≥n
   if ((Objeto.id>=56) and (Objeto.id<=103)) or ((Objeto.id>=248) and (Objeto.id<=253)) then
     result:=CalcularModificadorAtaDef(objeto)
   else
@@ -953,7 +953,7 @@ begin   //SÛlo si es un objeto de protecciÛn/maldiciÛn
 end;
 
 function ModificadorDanno(const objeto:TArtefacto; var tipoDanno:TTipoArma):integer;
-begin   //SÛlo si es un objeto de protecciÛn/maldiciÛn
+begin   //S√≥lo si es un objeto de protecci√≥n/maldici√≥n
   if ((Objeto.id>=56) and (Objeto.id<=103)) or ((Objeto.id>=248) and (Objeto.id<=253)) then
     result:=CalcularBono(objeto, tipoDanno)
   else
@@ -986,7 +986,7 @@ function EstadoObjeto(const Modificador:byte;var tipoMagia:TTipoMagiaArtefacto;v
 //identificado inicialmente tiene que tener el estado de vision verdadera.
 begin
   //Objetos normales: $3F= estado uso.
-  modificaDanno:=bytebool(modificador and MskDanno);//True,False (objetos m·gicos)
+  modificaDanno:=bytebool(modificador and MskDanno);//True,False (objetos m√°gicos)
   identificado:=bytebool(modificador and MskIdentificado);
   tipoMagia:=TTipoMagiaArtefacto(modificador shr 6);
   malvado:=false;
@@ -994,10 +994,10 @@ begin
     result:=modificador and MskEstadoObjetoNormal//0..63 (para normales, se deterioran, 63=excelente estado)
   else
     if tipoMagia=maHechizo then
-      result:=modificador and $1F//para objetos m·gicos especiales
+      result:=modificador and $1F//para objetos m√°gicos especiales
     else
     begin
-      result:=modificador and MskEstadoMagico;//para objetos de alineaciÛn m·gica malvada/bendita y los modificados por elementos
+      result:=modificador and MskEstadoMagico;//para objetos de alineaci√≥n m√°gica malvada/bendita y los modificados por elementos
       malvado:=(tipoMagia=maModificador) and ((modificador and mskMaldito)<>0);
     end;
 end;
@@ -1008,7 +1008,7 @@ var tipoMagia:TTipoMagiaArtefacto;
 begin
   result:=boNinguno;
   case objeto.id of
-    16..47,56..103,248..253://Artefactos benditos/malditos por bono en daÒo,ataque,evasiÛn.
+    16..47,56..103,248..253://Artefactos benditos/malditos por bono en da√±o,ataque,evasi√≥n.
     begin
       EstadoObjeto(objeto.modificador,tipoMagia,modificaDanno,esMalvado,estaIdentificado);
       if (tipoMagia=maNinguna) then
@@ -1059,7 +1059,7 @@ begin
   case objeto.id of
   4..7://Para el dinero
     result:=intastr(objeto.modificador)+result;
-  16..47,56..103,248..253://Artefactos benditos/malditos por bono en daÒo,ataque,evasiÛn.
+  16..47,56..103,248..253://Artefactos benditos/malditos por bono en da√±o,ataque,evasi√≥n.
   begin
     estado:=EstadoObjeto(objeto.modificador,tipoMagia,modificaDanno,esMaldito,estaIdentificado);
     estaIdentificado:=estaIdentificado or (CapIdentificacion=ciVerRealmente);
@@ -1083,13 +1083,13 @@ begin
                 if objeto.id>=56 then//armaduras
                   result:=result+'armadura'
                 else//armas
-                  result:=result+'daÒo';
+                  result:=result+'da√±o';
               end
               else
               begin
                 result:=result+' -'+intastr((estado+1)*5)+'% ';
                 if objeto.id>=56 then//armaduras
-                  result:=result+'evasiÛn'
+                  result:=result+'evasi√≥n'
                 else//armas
                   result:=result+'ataque';
               end
@@ -1102,13 +1102,13 @@ begin
                 if objeto.id>=56 then//armaduras
                   result:=result+'armadura'
                 else//armas
-                  result:=result+'daÒo';
+                  result:=result+'da√±o';
               end
               else
               begin
                 result:=result+' +'+intastr((estado+1)*5)+'% ';
                 if objeto.id>=56 then//armaduras
-                  result:=result+'evasiÛn'
+                  result:=result+'evasi√≥n'
                 else//armas
                   result:=result+'ataque';
               end
@@ -1129,7 +1129,7 @@ begin
       begin
         if (tipoMagia=maModificador) and (esMaldito) and
           bytebool(CapIdentificacion and ciMaldad) then
-          result:=result+' +MaldiciÛn'
+          result:=result+' +Maldici√≥n'
         else
           if bytebool(CapIdentificacion and ciMagia) then
             result:=result+' +Hechizo'
@@ -1154,14 +1154,14 @@ begin
     if ByteBool(objeto.modificador and MskEnvenenado) then
       result:=result+' +Veneno';
     if ByteBool(objeto.modificador and MskParalizante) then
-        result:=result+' +Par·lisis';
+        result:=result+' +Par√°lisis';
   end;
   136..140,143://Consumibles
     result:=result+' ('+intastr(objeto.modificador)+' usos)';
   ihPlumaMagica:
     result:=result+' ('+intastr(objeto.modificador)+' gramos)';
   ihVaritaLlena:
-    result:=result+' ('+intastr(objeto.modificador)+' man·)';
+    result:=result+' ('+intastr(objeto.modificador)+' man√°)';
   orAmuletoGuardabosques,orAmuletoGuerrero:
     result:=result+' +'+intastr(Objeto.modificador shr 2)+'%';
 
@@ -1175,7 +1175,7 @@ begin
     if estado<=100 then
       result:=result+' '+intastr(estado)+'%'
     else
-      result:=result+' de tallado ˙nico';
+      result:=result+' de tallado √∫nico';
     end;
   end;
 end;
@@ -1277,7 +1277,7 @@ begin
     end
     else
       case objeto.id of
-        //normales, cantidad 1byte (23=gemas talladas est· aqui por que su precio se calcula
+        //normales, cantidad 1byte (23=gemas talladas est√° aqui por que su precio se calcula
         //como si su identificador fuera cantidad.)
         orAmuletoGuerrero,orAmuletoGuardabosques://Amuletos
           result:=(result*objeto.modificador) shr 5;//Nota: en realidad 32=100% del precio
@@ -1335,7 +1335,7 @@ end;
 
 function RestarCantidadDeMaterialConst(var Objeto:Tartefacto;var cantidad:integer;SoloObjetosEnBuenEstado,ModificarObjeto:boolean):boolean;
 //SoloObjetosEnBuenEstado=false => cuenta el modificador para efectos., para gemas el valor va de 1 a 100.
-//SoloObjetosEnBuenEstado=true => De los hechizables sÛlo los modificadores de 25 a 63, de las gemas los modificadores de 25 a 100
+//SoloObjetosEnBuenEstado=true => De los hechizables s√≥lo los modificadores de 25 a 63, de las gemas los modificadores de 25 a 100
 //ModificarObjeto=true, resta cantidad de "Objeto"
 //ModificarObjeto=false, no modifica la variable "Objeto"
 //No funciona con objetos envenenables.
@@ -1487,7 +1487,7 @@ begin
             else
               modificador:=(modificador and $F8) or ((modificador and MskEstadoMagico)-1)//Pierde 1 nivel
           else
-            modificador:=modificador or MskDanno or MskEstadoMagico;//la peor maldiciÛn
+            modificador:=modificador or MskDanno or MskEstadoMagico;//la peor maldici√≥n
         maElemento:
           if (modificador and MskEstadoMagico)=0 then
             modificador:=MskEstadoObjetoNormal//Se vuelve arma normal
@@ -1648,7 +1648,7 @@ function controlArmaDannada(var arma:Tartefacto;durabilidad:byte):boolean;
 //no controla que el objeto sea arma
 var esArmaConjurada:boolean;
 begin
-  //Armas m·gicas, armas normales.
+  //Armas m√°gicas, armas normales.
   esArmaConjurada:= (arma.id shr 3)=1;
   result:=esArmaConjurada or ((random(durabilidad)=0) and
     (arma.modificador<=MskEstadoObjetoNormal) and (arma.id>=16));
