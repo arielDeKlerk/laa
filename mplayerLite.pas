@@ -7,7 +7,7 @@
 {*******************************************************}
 {
 Editado por Sergio:
-Básicamente es una version menor del MPlayer independiente de TWinControl
+BÃ¡sicamente es una version menor del MPlayer independiente de TWinControl
 }
 
 unit MPlayerLite;
@@ -142,7 +142,7 @@ end;
 
 procedure TMediaPlayer.Open;
 const
-  DeviceName: array[TMPDeviceTypes] of PChar = ('', 'AVIVideo', 'Sequencer',
+  DeviceName: array[TMPDeviceTypes] of PAnsiChar = ('', 'AVIVideo', 'Sequencer',
     'MPEGVideo', 'MPEGVideo');
 var
   OpenParm: TMCI_Open_Parms;
@@ -153,7 +153,7 @@ begin
   if FDeviceType <> dtAutoSelect then {fill in Device Type}
    OpenParm.lpstrDeviceType := DeviceName[FDeviceType];
   if FElementName <> '' then
-    OpenParm.lpstrElementName := PChar(FElementName);
+    OpenParm.lpstrElementName := PAnsiChar(AnsiString(FElementName));
   FFlags := 0;
   if FUseWait then
   begin
@@ -548,9 +548,9 @@ end;
 
 function TMediaPlayer.GetErrorMessage: string;
 var
-  ErrMsg: array[0..4095] of Char;
+  ErrMsg: array[0..4095] of AnsiChar;
 begin
-  if not mciGetErrorString(FError, ErrMsg, SizeOf(ErrMsg)) then
+  if not mciGetErrorStringA(FError, ErrMsg, SizeOf(ErrMsg)) then
     Result := 'Unknown'
   else SetString(Result, ErrMsg, StrLen(ErrMsg));
 end;

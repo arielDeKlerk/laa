@@ -10,9 +10,9 @@
 Editado por Sergio:
 Este es el codigo fuente del componente sockets de delphi,
 le agregue algunas cosas que creo que necesitaba :).
-En especial un peque駉 buffer de envio de datos y un identificador de
-socket para hacer f醕il relacionar un usuario con su socket
-de comunicaci髇. Tambi閚 modifique la forma en que se generaban los
+En especial un peque帽o buffer de envio de datos y un identificador de
+socket para hacer f谩cil relacionar un usuario con su socket
+de comunicaci贸n. Tambi茅n modifique la forma en que se generaban los
 mensajes de error, para que se registren en el log del servidor en
 lugar de mostrar ventanitas de error.
 }
@@ -33,7 +33,7 @@ const
 
 type
 //******************************************************************************
-//Sincronizaci髇 de objetos:
+//Sincronizaci贸n de objetos:
 //******************************************************************************
 
   TCriticalSection = class(TObject)
@@ -429,7 +429,7 @@ end;
 
 procedure TCustomWinSocket.Close;
 begin
-  //originalmente s髄o: Disconnect(FSocket);
+  //originalmente s贸lo: Disconnect(FSocket);
   if Connected then Disconnect(FSocket);
 end;
 
@@ -546,7 +546,7 @@ end;
 
 function TCustomWinSocket.GetLocalHost: string;
 var
-  LocalName: array[0..255] of Char;
+  LocalName: array[0..255] of AnsiChar;
 begin
   Lock;
   try
@@ -650,7 +650,7 @@ var
   HostEnt: PHostEnt;
   InAddr: TInAddr;
 begin
-  HostEnt := gethostbyname(PChar(Name));
+  HostEnt := gethostbyname(PAnsiChar(AnsiString(Name)));
   FillChar(InAddr, SizeOf(InAddr), 0);
   if HostEnt <> nil then
   begin
@@ -672,7 +672,7 @@ begin
   if Name <> '' then
     Result.sin_addr := LookupName(name)
   else if Address <> '' then
-    Result.sin_addr.s_addr := inet_addr(PChar(Address))
+    Result.sin_addr.s_addr := inet_addr(PAnsiChar(AnsiString(Address)))
   else if not Client then
     Result.sin_addr.s_addr := INADDR_ANY
   else raise ESocketError.Create(sNoAddress);
@@ -1363,7 +1363,7 @@ begin
 end;
 
 //******************************************************************************
-//Sincronizaci髇 de objetos:
+//Sincronizaci贸n de objetos:
 //******************************************************************************
 
 { TCriticalSection }

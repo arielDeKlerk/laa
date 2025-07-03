@@ -15,14 +15,14 @@ const MAX_LABELESxDIBUJADOR=15;
       POSX_IconosMaterialesConstruccion=SCREEN_W-149;
       POSY_IconosMaterialesConstruccion=50;
       IP_SERVIDOR_LOCAL='127.0.0.1';
-      MC_CONTRASENNA_CORTA='Tu contraseña no debe ser tan corta';
-      MC_CONTRASENNA_CONFIRMACION='La contraseña difiere de la confirmación';
-      MC_CONTRASENNA_ACTUAL_NUEVA='Escribe tu contraseña actual y nueva';
+      MC_CONTRASENNA_CORTA='Tu contraseÃ±a no debe ser tan corta';
+      MC_CONTRASENNA_CONFIRMACION='La contraseÃ±a difiere de la confirmaciÃ³n';
+      MC_CONTRASENNA_ACTUAL_NUEVA='Escribe tu contraseÃ±a actual y nueva';
       MEN_ANTI_ABUSO_CREACION='Ya creaste varios avatares. Tienes que subir de nivel'+#13+
-                              'con alguno de ellos antes de poder crear más.';
-      MEN_ABRE_EL_BAUL='Primero abre el baúl mágico';
+                              'con alguno de ellos antes de poder crear mÃ¡s.';
+      MEN_ABRE_EL_BAUL='Primero abre el baÃºl mÃ¡gico';
       MEN_REVISA_LA_BOLSA='Primero elige el objeto que quieres recoger';
-      MEN_SIN_MULTIPLES_SESIONES='XQ¯Q†:†1©J£M¥\ J‡P‚\ŒD’1“9¦B‘V4°SŒ=”5Š^°0©>–G¬]¤BŽA®1—@£8–5¯B¯0¦_ C“Z®\’VƒW‰5§[¯PŠ';
+      MEN_SIN_MULTIPLES_SESIONES='XQÂ¯Qâ€ :â€ 1Â©JÂ£MÂ¥\Â Jâ€¡Pâ€š\Å’Dâ€™1â€œ9Â¦Bâ€˜VÂ4Â°SÅ’=â€5Å ^Â°0Â©>â€“GÂ¬]Â¤BÅ½AÂ®1â€”@Â£8â€“5Â¯BÂ¯0Â¦_Â Câ€œZÂ®\â€™VÆ’Wâ€°5Â§[Â¯PÅ ';
 
 type
 //LABEL LOGICO
@@ -277,8 +277,8 @@ var f:textfile;
 
   procedure IniciarModoOffLine;
   var
-    zFileName, zParams: array[0..15] of Char;
-    zDir: array[0..79] of Char;
+    zFileName, zParams: array[0..15] of AnsiChar;
+    zDir: array[0..79] of AnsiChar;
     Controlador:integer;
   begin
     //Llamar al servidor con cadenas Z
@@ -288,17 +288,17 @@ var f:textfile;
     if ShellExecute(Controlador,nil,@zFileName,@zParams,StrPCopy(zDir,
         copy(Ruta_Aplicacion,1,length(Ruta_Aplicacion)-4)+'Servidor\'),SW_SHOW)<=32 then
       showmessageZ('No fue posible activar el Servidor');
-    //Configuración de IP
+    //ConfiguraciÃ³n de IP
     G_NombreDelServidor:=IP_SERVIDOR_LOCAL;
   end;
 begin
   Ruta_Aplicacion:=ExtractFilePath(ParamStr(0));
-  //Inicializar Variables configuración:
+  //Inicializar Variables configuraciÃ³n:
   Sonidos.DirectSound_Funcionando:=false;
   Sonidos.Emitir_Sonidos:=false;
   G_NombreDelServidor:=IP_SERVIDOR_LOCAL;
   G_ServidorWEB:='';
-  G_GameHosting:='Versión '+getVersionCliente();
+  G_GameHosting:='VersiÃ³n '+getVersionCliente();
   G_PuertoComunicacion:=PUERTO_COMUNICACION;
   G_MostrarFPS:=false;
   G_ModoLento:=false;
@@ -610,7 +610,7 @@ var i:integer;
 begin
 with DatosMenuOpciones do
 begin
-  elemento[0].etiqueta:='Teclas rápidas F2';
+  elemento[0].etiqueta:='Teclas rÃ¡pidas F2';
   elemento[1].etiqueta:='Nombres F3';
   elemento[2].etiqueta:='Rostros F4';
   elemento[3].etiqueta:='Transparencias F5';
@@ -618,7 +618,7 @@ begin
   elemento[5].etiqueta:='Antialisado F7';
   elemento[6].etiqueta:='Antistuttering F8';
   elemento[7].etiqueta:='Sonido F9';
-  elemento[8].etiqueta:='Música F10';
+  elemento[8].etiqueta:='MÃºsica F10';
   elemento[9].etiqueta:='Ver mensajes F11';
   elemento[10].etiqueta:='--- '+#155+' ---';
   elemento[11].etiqueta:='Salir del Juego';
@@ -706,7 +706,7 @@ begin
         if maxima_cantidad=1 then
           mensaje:='Ese tipo de objeto lo vendo uno a la vez'
         else
-          mensaje:='Sólo vendo hasta '+intastr(maxima_cantidad)+' unidades a la vez';
+          mensaje:='SÃ³lo vendo hasta '+intastr(maxima_cantidad)+' unidades a la vez';
         ControlMensajes.setMensaje(Comerciante,mensaje);
       end;
     end
@@ -827,7 +827,7 @@ end;
 
 function PrepararMenuComercio(RefComerciante:TmonstruoS):boolean;
 var i,conta,indiceComercio:integer;
-//Ojo Comerciante debe referenciar a un monstruo comerciante válido cercano.
+//Ojo Comerciante debe referenciar a un monstruo comerciante vÃ¡lido cercano.
 begin
   indiceComercio:=RefComerciante.duenno;
   if indiceComercio>=MapaEspejo.NumeroDeComerciantes then
@@ -998,13 +998,13 @@ begin
       ActualizarElementosDePantalla;
     end;
     case Error of
-      10053:mensajeE:='Conexión abortada por software';
-      10061:mensajeE:='La máquina '+G_NombreDelServidor+' no tiene un servidor activado'+#13+'o no es posible comunicarse mediante el puerto '+inttostr(G_PuertoComunicacion)+'.';
-      10049:mensajeE:='La dirección del servidor no es válida:'+#13+G_NombreDelServidor;
-      10060:mensajeE:='No existe respuesta a la solicitud de conexión:'+#13+G_NombreDelServidor;
+      10053:mensajeE:='ConexiÃ³n abortada por software';
+      10061:mensajeE:='La mÃ¡quina '+G_NombreDelServidor+' no tiene un servidor activado'+#13+'o no es posible comunicarse mediante el puerto '+inttostr(G_PuertoComunicacion)+'.';
+      10049:mensajeE:='La direcciÃ³n del servidor no es vÃ¡lida:'+#13+G_NombreDelServidor;
+      10060:mensajeE:='No existe respuesta a la solicitud de conexiÃ³n:'+#13+G_NombreDelServidor;
       10065:mensajeE:='No fue posible encontrar una ruta hasta:'+#13+G_NombreDelServidor;
       else
-        mensajeE:='Error de conexión: '+intastr(Error)
+        mensajeE:='Error de conexiÃ³n: '+intastr(Error)
     end;
     ShowmessageZ(mensajeE);
   end
@@ -1060,7 +1060,7 @@ begin
     AgresividadVerbal:=0;
     Password:=Jform.ContrasennaUU;
     IdentificadorDeClan:=0;
-    IdentificadorDeServidor:=0;//Id. no válido, así que al ingresar con este avatar ejecuta el control de consistencia
+    IdentificadorDeServidor:=0;//Id. no vÃ¡lido, asÃ­ que al ingresar con este avatar ejecuta el control de consistencia
   end;
   result:=EscribirCuenta(DatosUsuario,Ruta_Aplicacion+CARPETA_AVATARES,JugadorCl);
 end;
@@ -1078,7 +1078,7 @@ begin
     begin
       writeln(f,'AVATAR: '+nombre);
       writeln(f,'');
-      writeln(f,'DESCRIPCIÓN:');
+      writeln(f,'DESCRIPCIÃ“N:');
       writeln(f,'  '+InfMon[cod_raza and $7].nombre+' '+
         MC_Nombre_Categoria[cod_categoria and $7]+' '+MC_Genero[cod_genero and $1]);
       writeln(f,'PERICIAS:');
@@ -1220,7 +1220,7 @@ begin
                 if EsIdDeArmaOArmadura(lista[IndiceSel].id) then
                   with Jform do
                   begin
-                    AgregarMensaje('·'+nombreObjeto(lista[IndiceSel],ciVerRealmente));
+                    AgregarMensaje('Â·'+nombreObjeto(lista[IndiceSel],ciVerRealmente));
                     AgregarMensaje('+  '+DescribirObjeto(lista[IndiceSel],ciVerRealmente));
                   end;
               end
@@ -1262,7 +1262,7 @@ begin
   begin
     case Tipo of
       vaMenuComercio:Jform.mensajeTip:='Vender objeto del inventario';
-      vaMenuBaul:Jform.mensajeTip:='Guardar objeto en el baúl';
+      vaMenuBaul:Jform.mensajeTip:='Guardar objeto en el baÃºl';
       vaMenuObjetos:Jform.mensajeTip:='Soltar objeto del inventario';
     end;
     exit;
@@ -1271,7 +1271,7 @@ begin
   begin
     case Tipo of
       vaMenuComercio:Jform.mensajeTip:='Comprar objeto del comerciante';
-      vaMenuBaul:Jform.mensajeTip:='Sacar objeto del baúl';
+      vaMenuBaul:Jform.mensajeTip:='Sacar objeto del baÃºl';
       vaMenuObjetos:Jform.mensajeTip:='Recoger objeto';
     end;
     exit;

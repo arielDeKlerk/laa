@@ -5,15 +5,15 @@ License: GNU General Public License (GPL)
 Category: Multi-User Dungeons (MUD)
 *********************************************************)
 
-//MÛdulo libre de bibliotecas externas al juego
-unit Globales;
+//  CaracteresNoPermitidos:set of AnsiChar=[#0..#31,',','.','\','/',':','*','?','"','<','>','|','(',')',#127];
+  CaracteresPermitidos:set of AnsiChar=['a'..'z','A'..'Z','0'..'9',#32,'-','_','''',#159,#192..#214,#216..#246,#248..#255];
 interface
 uses Objetos,demonios;
 const
 //Generales
   PUERTO_COMUNICACION=31715;
   M_FaltanArchivosDelJuego='Faltan archivos del juego';
-  M_EjecutableDannado='°Ejecutable DaÒado!';
+  M_EjecutableDannado='¬°Ejecutable Da√±ado!';
 //  CaracteresNoPermitidos:set of char=[#0..#31,',','.','\','/',':','*','?','"','<','>','|','(',')',#127];
   CaracteresPermitidos:set of char=['a'..'z','A'..'Z','0'..'9',#32,'-','_','''',#159,#192..#214,#216..#246,#248..#255];
   MIN_PUERTO_COMUNICACION=21;
@@ -24,7 +24,7 @@ const
   CARPETA_AVATARES='avatares\';
   EXT_ARCH_AVATARES='.avt';
   VERSION_AVATAR=0;
-  //Siempre tiene que ser igual al tamaÒo usado en el servidor para TJugadorS
+  //Siempre tiene que ser igual al tama√±o usado en el servidor para TJugadorS
   TAMANNO_DE_INSTANCIA_DE_TJUGADORS=296;
   //Siempre revisar que sea el correcto al cambiar TClanJugadores en el servidor
   TAMANNO_DE_INSTANCIA_DE_TCLANJUGADORES=64;
@@ -92,19 +92,19 @@ begin
       case cadena[i] of
         'a'..'z':ncar:=upcase(cadena[i]);
         'A'..'Z','0'..'9':ncar:=cadena[i];
-        '¡','¿','ƒ','¬','·','‡','‰','‚','≈','Â','√','„':ncar:='A';
-        '…','»','À',' ','È','Ë','Î','Í':ncar:='E';
-        'Õ','Ã','œ','Œ','Ì','Ï','Ô','Ó':ncar:='I';
-        '”','“','÷','‘','Û','Ú','ˆ','Ù','’','ı':ncar:='O';
-        '⁄','Ÿ','‹','€','˙','˘','¸','˚':ncar:='U';
-        '›','˝','ˇ','ü':ncar:='Y';
-        'Ò','—':ncar:='N';
-        'Á','«':ncar:='C';
+        '√Å','√Ä','√Ñ','√Ç','√°','√†','√§','√¢','√Ö','√•','√É','√£':ncar:='A';
+        '√â','√à','√ã','√ä','√©','√®','√´','√™':ncar:='E';
+        '√ç','√å','√è','√é','√≠','√¨','√Ø','√Æ':ncar:='I';
+        '√ì','√í','√ñ','√î','√≥','√≤','√∂','√¥','√ï','√µ':ncar:='O';
+        '√ö','√ô','√ú','√õ','√∫','√π','√º','√ª':ncar:='U';
+        '√ù','√Ω','√ø','≈∏':ncar:='Y';
+        '√±','√ë':ncar:='N';
+        '√ß','√á':ncar:='C';
         else
           ncar:='_';
       end;
       result:=result+ncar;
-      if length(result)=16 then exit;//se llegÛ al m·ximo
+      if length(result)=16 then exit;//se lleg√≥ al m√°ximo
     end;
   end;
 
@@ -193,7 +193,7 @@ begin
   begin
     {$I-}
     assignFile(fusuae,nombreArchivo);
-    erase(fusuae);//SÛlo si se abre el archivo cerrarlo antes de borrarlo
+const LOS_CARACTERES_DE_UN_IP: set of AnsiChar=['0'..'9','.'];
     {$I+}
     result:=IOResult=0;
     nombreArchivo:=nombreArchivo+'.ban';//grabar el nuevo con distinto nombre

@@ -5,10 +5,10 @@ License: GNU General Public License (GPL)
 Category: Multi-User Dungeons (MUD)
 *********************************************************)
 
-//MÛdulo libre de bibliotecas externas al juego
+//M√≥dulo libre de bibliotecas externas al juego
 unit Demonios;
 //  Orientado al Servidor primordialmente y al Cliente, con ayuda de Sprites que
-//contiene informaciÛn adicional.
+//contiene informaci√≥n adicional.
 //Definiciones usadas por Sprites(servidor y Cliente) y Animacion(Cliente)
 interface
 uses Objetos;
@@ -19,7 +19,7 @@ const
   MaxJugadores=255;//En todos los mapas, maximo 16383.
   MaxMonstruos=8191;//En todos los mapas, maximo 16383.
   MaxClanesJugadores=249;//Maximo 249 total=250,
-  //Campo de visiÛn.
+  //Campo de visi√≥n.
   MaxRangoSeguirEnNormaCuadrado=27;
   MaxRangoParty=MaxRangoSeguirEnNormaCuadrado+3;
   MaxRangoArqueroEnNormaCuadrado=20;
@@ -60,9 +60,9 @@ const
 
   NIVEL_ATAQUE_SIEMPRE_EXITOSO=95;//garantiza 5% de ataques exitosos.
   MINIMO_PORCENTAJE_DE_ATAQUE=5;//garantiza 5% de ataques fallados,
-  // ojo que si lo analizan sÛlo toma efecto cuanto un jugador tiene tanta
-  //ventaja en su ataque que a˙n teniendo una lanzada tan baja podrÌa golpear
-  //con Èxito, asi que no afeca a los jugadores menos poderosos.
+  // ojo que si lo analizan s√≥lo toma efecto cuanto un jugador tiene tanta
+  //ventaja en su ataque que a√∫n teniendo una lanzada tan baja podr√≠a golpear
+  //con √©xito, asi que no afeca a los jugadores menos poderosos.
   MAXIMA_CANTIDAD_HORNOR_POR_VICTORIA=5;
 
 // No cambiar!!:
@@ -70,7 +70,7 @@ const
   MAX_INDICE_PARTY=3;//NO CAMBIAR!!
   MAX_POSICIONES=MAX_ARTEFACTOS+8;
   BYTES_INVENTARIO=(MAX_POSICIONES+1)*2;
-  MAX_CONJUROS=29;//m·ximo 31
+  MAX_CONJUROS=29;//m√°ximo 31
   NIVEL_MAXIMO=100;
   MAX_DEMONIO_HP=8000;
   MAX_CASILLA_NEGADA_ZOOMORFISMO=3;//no usar armas, armaduras ni cascos
@@ -83,7 +83,7 @@ const
   //Animaciones de armaduras: 32 armaduras * 8 clases * 8 razas * 2 sexos
   MAX_ANIMACIONES_ARMADURAS=4095;
 
-// Flags de terreno en mapa lÛgico
+// Flags de terreno en mapa l√≥gico
   ft_Cubierto=$0400; // cubierto con techo
   ft_TerrenoSuave=$0800;
   ft_TerrenoSolido=$1000;
@@ -91,7 +91,7 @@ const
   ft_Fuego=$4000;
   ft_Agua=$8000;
 
-  mskTerreno_Cultivos=ft_TerrenoSuave;//no es terreno sÛlido ni est· cubierto
+  mskTerreno_Cultivos=ft_TerrenoSuave;//no es terreno s√≥lido ni est√° cubierto
   mskTerreno_Pisos=ft_TerrenoSolido or ft_TerrenoSuave;
   mskTerreno_InteriorVivienda=mskTerreno_Pisos or ft_Cubierto;
   MskTerreno_SoltarBolsa=mskTerreno_InteriorVivienda or ft_TierraSalvaje;//casi todos los terrenos
@@ -104,7 +104,7 @@ const
   ccJgdr=$0000;
   ccMon=$4000;
   ccLimiteMonstruos=$7FFF;
-  ccClan=$8000;//para indicar que el dueÒo de un monstruo es un clan.
+  ccClan=$8000;//para indicar que el due√±o de un monstruo es un clan.
   ccRec=$FD00;//recursos, impiden el movimiento.
   ccRecMov=$FDFF;//modificable por flags del mapa
   //Mayor o igual a ccVacRango, pero menor a ccVac => impide movimiento pero deja pasar municiones y conjuros.
@@ -113,10 +113,10 @@ const
   ccVac=$FFFF;//NO cambiar (casilla vacia)
   ccSinDuenno=ccVac;
 
-//SincronizaciÛn para optimizar comunicaciÛn
+//Sincronizaci√≥n para optimizar comunicaci√≥n
   flYaConoceSuBaul=$01;
   flModoPKiller=$02;
-  flRevisandoBolsa=$04;// Evita enviar informaciÛn de una bolsa continuamente
+  flRevisandoBolsa=$04;// Evita enviar informaci√≥n de una bolsa continuamente
   flSaliendoDelServidor=$80;
 
 //Flags de auras externas:
@@ -127,7 +127,7 @@ type
   //TdBasico:
   {
     Monstruos: Comerciantes: Tiempo de atencion
-    Jugadores:               Tiempo de duraciÛn de su agresividad.
+    Jugadores:               Tiempo de duraci√≥n de su agresividad.
   }
   TTimerDemonio=(tdBasico,tdInvisible,tdArmadura,tdFuerzaGigante,tdApresurar,tdProteccion,tdVisionVerdadera,tdParalisis,tdBerserker,TdCongelado,tdCombate,tdAturdir,tdAspectoNN,tdNoUsado);
   TTipoTransaccion=(ttNinguna,ttCompraPJ,ttVentaPJ,ttCompraAPNJ,ttVentaAPNJ,ttHacerParty);
@@ -165,13 +165,13 @@ const
   aaAtacando5=aaAtacando1+4;
   aaUltimoAtaque=aaAtacando5;
   //Comportamientos monstruos
-  comPacifico=0;//meleÈ
-  comTerritorial=1;//meleÈ
-  comAgresivo=2;//meleÈ
+  comPacifico=0;//mele√©
+  comTerritorial=1;//mele√©
+  comAgresivo=2;//mele√©
   comAtaqueRango=3;//Arqueros, arcabuceros, ballesteros, honderos: entras en rango y te atacan.
   comHerbivoro=4;//escapan, comen hierbas.
-  comGuardia=5;//meleÈ, te acercas mucho y te atacan
-  comAtaqueHechizos=6;//lanza conjuros, pero puede atacar con meleÈ, escapa si no tiene man· ni ataque meleÈ.
+  comGuardia=5;//mele√©, te acercas mucho y te atacan
+  comAtaqueHechizos=6;//lanza conjuros, pero puede atacar con mele√©, escapa si no tiene man√° ni ataque mele√©.
   comGuerreroMago=7;//el 3er ataque es un conjuro que puede lanzarlo.
   comObjetoDummy=8;//No ataca y no se mueve.
   comDefensaEstatica=9;
@@ -184,7 +184,7 @@ const
   comGameMaster=127;
   comAdmin=126;
   comModerador=125;
-  //CategorÌas de jugadores
+  //Categor√≠as de jugadores
   ctGuerrero=0;
   ctClerigo=1;
   ctMago=2;
@@ -209,7 +209,7 @@ const
 //Banderas de monstruos y jugadores:
 //16 primeras=visibles
 //24 primeras=persistentes
-//8 ˙ltimas=sÛlo en el cliente.
+//8 √∫ltimas=s√≥lo en el cliente.
   //Banderas visibles por otros jugadores (16)
   BnBerserker          =$1;//jug
   BnInvisible          =$2;
@@ -221,7 +221,7 @@ const
   BnParalisis         =$80;
 
   BnCongelado        =$100;
-  BnEfectoBardo      =$200;//sÛlo jug
+  BnEfectoBardo      =$200;//s√≥lo jug
   BnVisionVerdadera  =$400;
   BnEnvenenado       =$800;
 {
@@ -239,19 +239,19 @@ const
   BnModoDefensivo  =$80000;
 
 //Superiores (8), usados separadamente en cliente/servidor:
-//SÛlo en el servidor:
+//S√≥lo en el servidor:
   BnSiguiendo    =$1000000;//siguiendo a un monstruo o avatar
-  BnDuracion     =$2000000;//mayor tiempo de duraciÛn.
+  BnDuracion     =$2000000;//mayor tiempo de duraci√≥n.
 
-  BnControlado   =$8000000;//indica si el monstruo est· bajo control de GM, para Avatares indica si est· en la carcel
-//SÛlo en el cliente:
+  BnControlado   =$8000000;//indica si el monstruo est√° bajo control de GM, para Avatares indica si est√° en la carcel
+//S√≥lo en el cliente:
   BnFantasma    =$10000000;
   BnMana        =$20000000;//efecto de acumular mana
   BnDescansar   =$40000000;//efecto descansando
 
 //Banderas que son visibles
   MskBanderasConAura=$FFFF or BnMana;
-//Banderas que son disipadas por sanaciÛn
+//Banderas que son disipadas por sanaci√≥n
   MskBanderasSanadas=bnEnvenenado or BnCongelado;
 //Banderas que no son afectadas por disipar magia
   MskBanderasNoMagia=$FF000000 or MskBanderasSanadas
@@ -263,10 +263,10 @@ const
 //Banderas magicas negativas
   MskBanderasNegativasDisipables=BnAturdir or BnParalisis;
 
-  //CÛdigo especial para avatares muertos:
+  //C√≥digo especial para avatares muertos:
   moAriete=50;
 //  moFantasma=100;
-  //CÛdigos de monstruos
+  //C√≥digos de monstruos
   //Monstruos (100..183)
   moAranna=101;
   moOgro=142;
@@ -287,7 +287,7 @@ const
   dsNorOeste=6;
   dsSudEste=7;
   dsIndefinido=8;
-  //Matrices constantes para optimizaciÛn de tiempo.
+  //Matrices constantes para optimizaci√≥n de tiempo.
   MC_avanceX:array[0..7] of smallint=(0,0,-1,1,1,-1,-1,1);
   MC_avanceY:array[0..7] of smallint=(-1,1,0,0,-1,1,-1,1);
   MC_direccionApunnalada:array[0..7] of byte=(
@@ -367,9 +367,9 @@ const
     hbEscribir or hbAlquimia or hbZoomorfismo or hbTallarGemas,//Guerrero
     hbAmbidextria or hbApunnalar or hbBerserker or hbZoomorfismo,//Clerigo
     hbAmbidextria or hbBerserker or hbCarpinteria or hbHerreria,//Mago
-    hbEscribir or hbAlquimia or hbBerserker or hbZoomorfismo,//BribÛn
-    hbEscribir or hbAlquimia or hbHerreria or hbTallarGemas,//Montaraz
-    hbEscribir or hbAlquimia or hbApunnalar or hbZoomorfismo,//PaladÌn
+  Sonido_Ataque_Exitoso:array[0..MaxNombresAtaques] of AnsiChar=
+  Sonido_Ataque_Armadura:array[0..MaxNombresAtaques] of AnsiChar=
+    hbEscribir or hbAlquimia or hbApunnalar or hbZoomorfismo,//Palad√≠n
     0,//Bardo
     0);//Guerrero Mago
   //Razas de jugadores
@@ -383,14 +383,14 @@ const
   //Otros:
   MaxNombresAtaques=29;
   Sonido_Ataque_Exitoso:array[0..MaxNombresAtaques] of Char=
-  ({'·cido'}'u',{'aguijÛn'}'G',{'alabarda'}'E',{'aliento'}#197,{'arcabuz'}'A',
+  ({'√°cido'}'u',{'aguij√≥n'}'G',{'alabarda'}'E',{'aliento'}#197,{'arcabuz'}'A',
   {'arco y flecha'}'F',{'ballesta'}'F',{'cola'}'C',{'cuernos'}'G',{'daga'}'E',
   {'embestida'}'C',{'espada'}'E',{'fuego'}#200,{'garra'}'G',{'golpe'}'C',
   {'hacha'}'E',{'hechizo'}#199,{'hielo'}#203,{'lanza'}'E',{'mandoble'}'E',{'maza'}'C',
   {'dardo venenoso'}'F',{'mordida'}'G',{'patada'}'C',{'picotazo'}'G',{'rayo'}#198,
   {'tenazas'}'G',{flecha venenosa}'F',#196{aliento frio},{'hechizo matar'}#215);
   Sonido_Ataque_Armadura:array[0..MaxNombresAtaques] of Char=
-  ({'·cido'}'u',{'aguijÛn'}'g',{'alabarda'}'e',{'aliento'}#197,{'arcabuz'}'f',
+  ({'√°cido'}'u',{'aguij√≥n'}'g',{'alabarda'}'e',{'aliento'}#197,{'arcabuz'}'f',
   {'arco y flecha'}'f',{'ballesta'}'f',{'cola'}'g',{'cuernos'}'g',{'daga'}'e',
   {'embestida'}'g',{'espada'}'e',{'fuego'}#200,{'garra'}'g',{'golpe'}'g',
   {'hacha'}'e',{'hechizo'}#199,{'hielo'}#203,{'lanza'}'e',{'mandoble'}'e',{'maza'}'g',
@@ -418,7 +418,7 @@ const
   mskEspecialidadFija = $80;
 
 // Codigos de animaciones
-//estadÌsticas base de animacion
+//estad√≠sticas base de animacion
 
   MaxCuadrosJ=19;//20 (0..19) MaxFrames+4*3=7+12
   MaxCuadrosM=MaxFramesTimer;//8
@@ -545,14 +545,14 @@ type
       Regeneracion:byte;
       ModificadorTesoro:byte;
       PExperiencia:word;//que da por derrotarlo
-      //DaÒos.
+      //Da√±os.
       Ataque:array[0..MAX_TIPOS_ATAQUE_MONSTRUO] of TDanno;
       tesoro:byte;
       visibilidad:byte;
       //indice de movimiento
       movimiento:byte;
       EstiloMuerte:TEstiloMuerte;
-      //TamaÒo de la criatura:
+      //Tama√±o de la criatura:
       //0=diminuto 1=peque 2=medi 3=grande 4=gigante
       tamanno:byte;
       TesoroAzar:byte;
@@ -601,27 +601,27 @@ type
     noUsadoZ1:byte;
 
     activo:bytebool;
-    codMapa:byte;//cÛdigo de mapa.
+    codMapa:byte;//c√≥digo de mapa.
     accion:TAccionMonstruo;
     codAnime:byte;
 
-    codigo:word; //cÛdigo monstruo/jugador. = identificador del socket de conexion
-    codNido:byte;//Servidor: CÛdigo nido para monstruos definidos en el mapa. Cliente: bits $3 = sincronizador de sonidos de pasos.
+    codigo:word; //c√≥digo monstruo/jugador. = identificador del socket de conexion
+    codNido:byte;//Servidor: C√≥digo nido para monstruos definidos en el mapa. Cliente: bits $3 = sincronizador de sonidos de pasos.
     comportamiento:shortint;//reputacion para jugadores.
 
     //estados: paralizado, envenenado, invisible, etc.
     banderas:integer;
 
-    //Para monstruos:cÛdigo de jugador dueÒo de este monstruo.
+    //Para monstruos:c√≥digo de jugador due√±o de este monstruo.
     //Para Personajes no jugadores (comerciantes): Indice de comercio.
     //Libre de modificar en TjugadorS
     duenno:word;
-    //Monstruo o jugador que atacara, contiene el cÛdigo y el flag de contenido
-    //que indica el cÛdigo corresponde a un monstruo o un jugador.
+    //Monstruo o jugador que atacara, contiene el c√≥digo y el flag de contenido
+    //que indica el c√≥digo corresponde a un monstruo o un jugador.
     AtaqueUtilizado:byte;//and $3F=0..63=conjuros, shr 6=nro ataque utilizado
     PericiasDinamicas:byte;//Flags de hechizos que puede usar el monstruo, definido en el manual de monstruos.
 
-    objetivoAtacado:word;//Indica que monstruo/jugador est· atacando. En Tjugador es el apuntado en formato casilla
+    objetivoAtacado:word;//Indica que monstruo/jugador est√° atacando. En Tjugador es el apuntado en formato casilla
     objetivoASeguir:word;
 
     //Los siguientes son usados en forma separada en el cliente y en el servidor.
@@ -629,10 +629,10 @@ type
                //Tambien indica si ya puede surgir un monstruo nuevo (ritmo=0).
     Control_Movimiento:byte;//En el servidor almacena flags para busqueda de caminos. En el cliente sincroniza animaciones
     //Para los jugadores funciona de esta forma:
-    //?0 Usar siguiente direcciÛn
-    //?1 Usar anterior direcciÛn
-    //0? No usar flag de direcciÛn
-    //1? Usar flag de direcciÛn
+    //?0 Usar siguiente direcci√≥n
+    //?1 Usar anterior direcci√≥n
+    //0? No usar flag de direcci√≥n
+    //1? Usar flag de direcci√≥n
     coordx_ant,coordy_ant:byte;//En el servidor: posiciones base para guardias y comerciantes.
     constructor create(codigo_n:word);
     procedure activar(const x,y:byte);
@@ -641,8 +641,8 @@ type
     function TimerActivo(TipoTimer:TTimerDemonio):bytebool;
     procedure ReducirTiempoDeTimer(TipoTimer:TTimerDemonio;ticksReducidos:byte);
     procedure TerminarTimer(TipoTimer:TTimerDemonio);
-    procedure AnimarAtaque;//Asigna un cÛdigo de animacion
-    function RealizarResistenciaMagica{(ConjuroAgresivo:bytebool)}:byte;//Devuelve un mensaje apropiado seg˙n el caso: ok al conjuro, el conjuro falla, invulnerable a conjuros.
+    procedure AnimarAtaque;//Asigna un c√≥digo de animacion
+    function RealizarResistenciaMagica{(ConjuroAgresivo:bytebool)}:byte;//Devuelve un mensaje apropiado seg√∫n el caso: ok al conjuro, el conjuro falla, invulnerable a conjuros.
     function mejorar(MatoAUnJugador:boolean):boolean;//true si elevo su nivel de poder
     procedure disiparMagia();
     function esNecesarioDisiparMagia():boolean;
@@ -681,11 +681,11 @@ type
     Usando:array[0..7] of TArtefacto;
     Artefacto:TInventarioArtefactos;
     NivelAtaque:byte;//Completo menos arma usada.
-    Defensa:byte;//evasiÛn
+    Defensa:byte;//evasi√≥n
     ModDefensa:shortint;//Modificadores de ac Vestimentas,armadura,escudo
     dannoBase:byte;//danno de bono
 
-    EspecialidadArma:byte;//cÛdigo de arma.
+    EspecialidadArma:byte;//c√≥digo de arma.
     NivelEspecializacion:byte;
     HabilidadResaltada:byte;//la habilidad a mejorar y la habilidad a reducir
     //Formato HabilidadResaltada: $07: habilidad a mejorar, $38: habilidad a disminuir
@@ -696,7 +696,7 @@ type
     armadura:TArmadurasJugador;
 
     ConjuroElegido:byte;
-    NivelDeCategoria:Byte;// para recibir bendiciÛn en las armas //no usado por el momento
+    NivelDeCategoria:Byte;// para recibir bendici√≥n en las armas //no usado por el momento
     FlagsComunicacion:Byte;// para reducir flujo de inf.
     Clan:byte;
 
@@ -713,7 +713,7 @@ type
     //Quest:
     //no iniciado: not QuestEnCurso and not QuestLogrado
     //iniciado: QuesEnCurso and not QuestLogrado.
-    //casi completado, sÛlo falta el premio: QuestEnCurso and QuestLogrado
+    //casi completado, s√≥lo falta el premio: QuestEnCurso and QuestLogrado
     //completado: not QuestEnCurso and QuestLogrado.
     QuestEnCurso:integer;//no usado por el momento
     QuestLogrado:integer;//no usado por el momento
@@ -721,7 +721,7 @@ type
     //Los siguientes no son necesarios guardarlos:
     //Para comerciar(12 bytes :( )
     DineroOferta:integer;//El precio fijado
-    CodigoMonstruoOferta:word;//sÛlo el cÛdigo, con TipoTransaccion se verifican si es jugador o monstruo
+    CodigoMonstruoOferta:word;//s√≥lo el c√≥digo, con TipoTransaccion se verifican si es jugador o monstruo
     objetoOferta:TArtefacto;//Si es distinto del seleccionado por el jugador=>Trampa!!
     IndiceObjetoOferta:byte;//En el inventario de objetos para control.
     IndiceInflacionModificada:byte;//Para no buscarlo denuevo
@@ -771,7 +771,7 @@ type
     procedure TruncarArmasMagicasPoderosas;
     function PuedeConstruir(idHerramienta,idObjeto:byte):boolean;
     function TieneMaterialSuficiente(idObjeto:byte):boolean;
-    function PuedeEscribirElConjuroSeleccionado(IndiceObjetoTintaMagica:byte):byte;//devuelve el cÛdigo de mensaje apropiado
+    function PuedeEscribirElConjuroSeleccionado(IndiceObjetoTintaMagica:byte):byte;//devuelve el c√≥digo de mensaje apropiado
     function PuedeLeerElConjuro(nro_conjuro:byte):boolean;
     function NivelMaximoQuePuedeReparar(TipoReparacion:TTipoReparacion):integer;
     function PuedeActivarBerserker:byte;
@@ -794,13 +794,13 @@ type
 
   TClanJugadores=Class(TObject)
   public
-    //colores 30 bits (6*5), 2 ˙ltimos bits=modelo de estandarte
+    //colores 30 bits (6*5), 2 √∫ltimos bits=modelo de estandarte
     Nombre:TCadena23;
     PendonClan:TBanderaClan;//modelo y colores de estandarte
     Lider:TCadenaLogin;
     CodigoClan:byte;
     MiembrosActivos:word;//20
-    UltimoLogIn:word;//-30000 dÌas de TdateTime
+    UltimoLogIn:word;//-30000 d√≠as de TdateTime
     ColorClan:byte;
     Nousado1:byte;
     IdentificadorDeClan:integer;
@@ -1150,7 +1150,7 @@ begin
 end;
 
 function TMonstruoS.TickTimer(TipoTimer:TTimerDemonio):bytebool;
-//SÛlo es verdad si el timer estaba en 1.
+//S√≥lo es verdad si el timer estaba en 1.
 begin
   result:=fTimer[byte(TipoTimer)]=1;
   if fTimer[byte(TipoTimer)]>0 then dec(fTimer[byte(TipoTimer)]);
@@ -1351,7 +1351,7 @@ begin
   modificadores_defensa:=0;
   bonoMagico:=0;
   FillChar(armadura,sizeof(armadura),0);
-  //Modificadores de agilidad para evasiÛn
+  //Modificadores de agilidad para evasi√≥n
   for i:=uArmadura to uAnillo do
     inc(modificadores_defensa,ModificadorDefensaObjeto(Usando[i]));//ModificadorAC verifica tipo_de objeto.
   for i:=uArmadura to uAnillo do
@@ -1361,10 +1361,10 @@ begin
     if TipoDanno=taMagia then
       inc(bonoMagico,bono)
     else
-      inc(armadura[integer(TipoDanno)],bono);//ModificadorDaÒo verifica tipo_de objeto.
+      inc(armadura[integer(TipoDanno)],bono);//ModificadorDa√±o verifica tipo_de objeto.
   end;
   for i:=uArmaDer to uArmaIzq do
-    if (Usando[i].id shr 3)=10 then//Control sÛlo para Escudos
+    if (Usando[i].id shr 3)=10 then//Control s√≥lo para Escudos
     begin
       inc(modificadores_defensa,CalcularModificadorAtaDef(Usando[i]));//Calcular modificador no verifica tipo_de objeto.
       TipoDanno:=taMagia;
@@ -1401,7 +1401,7 @@ begin
       inc(bonoMagico,InfObj[id].danno2P);
     end;
   end;
-  //Bonos por hechizos m·gicos positivos y negativos
+  //Bonos por hechizos m√°gicos positivos y negativos
   inc(armadura[integer(taHielo)],bonoMagico);
   inc(armadura[integer(taFuego)],bonoMagico);
   inc(armadura[integer(taRayo)],bonoMagico);
@@ -1499,12 +1499,12 @@ begin
     item:=itemSec;
 //Determinar animacion:
 //Estilos:
-//0: PuÒos/daga, Maza, Espada, Hacha, Arma de rango
-//1: PuÒos/daga, Maza, Espada, Pica, Arma de rango
-//2: PuÒos/daga, Maza, Espada, Arma de rango, Cetro
-//3: PuÒos/daga, Hielo, Fuego, Manos magia, Cetro
-//4: PuÒos/daga, Maza, Fuego, Manos magia, Simbolo
-//5: PuÒos/daga, Pica, Espada, Arma de rango, Cetro
+//0: Pu√±os/daga, Maza, Espada, Hacha, Arma de rango
+//1: Pu√±os/daga, Maza, Espada, Pica, Arma de rango
+//2: Pu√±os/daga, Maza, Espada, Arma de rango, Cetro
+//3: Pu√±os/daga, Hielo, Fuego, Manos magia, Cetro
+//4: Pu√±os/daga, Maza, Fuego, Manos magia, Simbolo
+//5: Pu√±os/daga, Pica, Espada, Arma de rango, Cetro
 //6: Todos, [No asignar], [No asignar], [No asignar], [No asignar]
   if codAnime<=Fin_animaciones_avatares then//si es animacion de avatar
     case InfObj[item].TipoAnimacion of
@@ -1587,7 +1587,7 @@ function TjugadorS.nuevoPersonaje(const datosPJ:TDatosNuevoPersonaje):boolean;
 var i:integer;
   function VerificarDatosIniciales:boolean;
   begin
-    //raza y categorÌa
+    //raza y categor√≠a
     result:=false;
     if TipoMonstruo>6 then exit;
     if codCategoria>7 then exit;
@@ -1640,7 +1640,7 @@ var i:integer;
       ctMago,ctGuerreroMago:
       begin
         Usando[uArmadura]:=ObjetoArtefacto(77,40); // ropa de campesino
-        Artefacto[6]:=ObjetoArtefacto(124,1);//Varita m·gica
+        Artefacto[6]:=ObjetoArtefacto(124,1);//Varita m√°gica
         Artefacto[7]:=ObjetoArtefacto(orBebidaMasMana,10);
       end;
       ctBribon,ctBardo,ctMontaraz:
@@ -1652,9 +1652,9 @@ var i:integer;
       end;
       ctClerigo:
       begin
-        Usando[uArmadura]:=ObjetoArtefacto(72,25);// H·bito
+        Usando[uArmadura]:=ObjetoArtefacto(72,25);// H√°bito
         Artefacto[6]:=ObjetoArtefacto(34,40);//garrote
-        Artefacto[7]:=ObjetoArtefacto(116,1);//SÌmbolo clerical
+        Artefacto[7]:=ObjetoArtefacto(116,1);//S√≠mbolo clerical
       end;
       ctGuerrero:
       begin
@@ -1723,14 +1723,14 @@ begin
   fCodCara:=DefinirRostro;
   HabilidadResaltada:=MC_HabilidadBase[codCategoria];
   ObtenerPosicionInicial(codMapa,coordx,coordy);
-//InicializaciÛn en nivel 1
+//Inicializaci√≥n en nivel 1
   experiencia:=0;
   NivelDeCategoria:=MIN_NIVEL_CATEGORIA;//Cuando el nivel sea igual a este,
   nivel:=0;
   ModificarExperiencia(1);//Subir de nivel a 1.
   hp:=maxHp;
   mana:=maxMana;
-//InicializaciÛn de Objetos
+//Inicializaci√≥n de Objetos
   Equipo_inicial;
   Definir_Especialidad_Armas;
   Conjuros_Iniciales;
@@ -1874,7 +1874,7 @@ function TjugadorS.ModificarExperiencia(cantidad:integer):bytebool;
     if (nivel>=1) then
       if (nivel<=MAX_NIVEL_CON_BONO) then //Bonos en habilidades!!
       begin
-        EvitarHabilidadResaltadaAlMaximo;//evitar subir m·s de 100%
+        EvitarHabilidadResaltadaAlMaximo;//evitar subir m√°s de 100%
         IncrementarHabilidadResaltada;
         if nivel<MAX_NIVEL_CON_BONO then
           EvitarHabilidadResaltadaAlMaximo//si ya subimos al 100%, elegir otra habilidad
@@ -1890,7 +1890,7 @@ function TjugadorS.ModificarExperiencia(cantidad:integer):bytebool;
         EvitarHabilidadDecrementadaAlMinimo;
         DecrementarHabilidadResaltada;
         EvitarHabilidadDecrementadaAlMinimo;
-        EvitarHabilidadResaltadaAlMaximo;//evitar subir m·s de 100%
+        EvitarHabilidadResaltadaAlMaximo;//evitar subir m√°s de 100%
         IncrementarHabilidadResaltada;
         EvitarHabilidadResaltadaAlMaximo;//si ya subimos al 100%, elegir otra habilidad
       end;
@@ -1938,7 +1938,7 @@ begin
 end;
 
 function TjugadorS.TieneLaLlave(idObj,modificadorObj:byte;flagsCalabozo:integer;var indiceUsando:byte):bytebool;
-//indiceUsando<>0 => sÛlo buscar en las manos.
+//indiceUsando<>0 => s√≥lo buscar en las manos.
 var i,limite:integer;
 //Objeto nulo (id 0..3) => Sin control de objeto
 //Modificador=0 => sin control de modificador.
@@ -1994,7 +1994,7 @@ end;
 function TjugadorS.IntercambiarObjetos(PosObjO,PosObjD:byte):byte;
 (*
 - Devuelve true si intercambio dos objetos
-- Las posiciones indicadas est·n en el rango 0..7 para los q se est·n usando
+- Las posiciones indicadas est√°n en el rango 0..7 para los q se est√°n usando
   y 8..MAX_POSICIONES para los de inventario.
 - Controla que no se pueda "usar" un objeto no permitido por clase, raza u otros.
 *)
@@ -2059,7 +2059,7 @@ var ObjTemp:Tartefacto;
 begin
   result:=i_Error;//No mostrar mensaje de error para este caso
   if PosObjO<>PosObjD then //Que sean distintos
-  if (PosObjO>=8) and (PosObjO<=MAX_POSICIONES) and (PosObjD<=MAX_POSICIONES) then //Que su posicion sea v·lida
+  if (PosObjO>=8) and (PosObjO<=MAX_POSICIONES) and (PosObjD<=MAX_POSICIONES) then //Que su posicion sea v√°lida
     if (PosObjD<8) then//Destino = icono => Equipar un objeto
     begin
       if longbool(banderas and bnParalisis) then
@@ -2196,7 +2196,7 @@ procedure TjugadorS.SanacionCuracion;
 var temp:integer;
 begin
   banderas:=(banderas or MskBanderasSanadas) xor MskBanderasSanadas;
-  calcularHP;//por si existe maldiciÛn.
+  calcularHP;//por si existe maldici√≥n.
   temp:= hp;
   inc(temp, PUNTOS_HP_POCION);
   if temp<(maxHp shr 2) then //curar hasta llegar a amarillo
@@ -2341,12 +2341,12 @@ end;
 function TjugadorS.TieneMaterialSuficiente(idObjeto:byte):boolean;
 //  Devuelve true si tiene materiales suficientes.
 //  Si consumir=true y tiene materiales suficientes resta los materiales necesarios,
-//adem·s devuelve en Cadena los indices
+//adem√°s devuelve en Cadena los indices
 var i,j:integer;
     contadores:array[0..2] of integer;
-//  B·sicamente va revisando los artefactos, si este es del tipo_requerido y
+//  B√°sicamente va revisando los artefactos, si este es del tipo_requerido y
 //la cantidad necesaria todavia es mayor a 0, decrementa la cantidad necesaria
-//de acuerdo al n˙mero de elementos.
+//de acuerdo al n√∫mero de elementos.
 //  Si al finalizar todavia uno de los contadores es mayor a 0, significa que
 //faltan materiales.
 begin
@@ -2626,7 +2626,7 @@ begin
             begin
               result:=byte(MonstruoApuntadoIncorrecto);
               if result=i_Ok then
-                //Nota "result=i_Ok" implica que "apuntado" es un TmonstruoS v·lido.
+                //Nota "result=i_Ok" implica que "apuntado" es un TmonstruoS v√°lido.
                 if (Apuntado is TJugadorS) or (Apuntado.comportamiento<>comComerciante) then
                   exit//para salir
                 else
@@ -2642,7 +2642,7 @@ begin
             if (idPosArma=uArmaIzq) and (InfObj[Usando[uArmaDer].id].PesoArma=paPesada) then
               Usando[uArmaIzq].id:=3//No es un arma.
             else
-              Usando[idPosArma].id:=idPosArma;//PuÒo derecho, izquierdo
+              Usando[idPosArma].id:=idPosArma;//Pu√±o derecho, izquierdo
           if InfObj[Usando[idPosArma].id].AlcanceArma=aaMelee then
           begin
             result:=i_Ok;exit //para salir
@@ -2766,7 +2766,7 @@ begin
   case comportamiento of
     0:result:='Plebeyo';
     1..99:result:='Noble '+intastr(comportamiento)+'%';
-    comHeroe:result:='HÈroe';
+    comHeroe:result:='H√©roe';
     comModerador:result:='Moderador';
     comAdmin:result:='Administrador';
     comGameMaster:result:='Amo del Calabozo';
